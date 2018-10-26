@@ -13,12 +13,7 @@ stages {
             echo sh(script: 'env|sort', returnStdout: true)
         }
     }
-    stage('Terraform Init') {
-        steps {
-            sh 'terraform init'
-        }
-    }
-   
+ 
     stage('Terraform Init') {
         steps {
             withCredentials([
