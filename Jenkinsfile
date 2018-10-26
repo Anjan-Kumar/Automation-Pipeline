@@ -14,6 +14,13 @@ stages {
         }
     }
  
+     stage('Completed pre build and working on Build') {
+        steps {
+            sh 'echo "Pre-build Success and Next step is Terraform init....!!"'
+        }
+    }
+  }
+
     stage('Terraform Init') {
         steps {
             withCredentials([
@@ -26,17 +33,12 @@ stages {
         }
     }
 
-     stage('Terraform Plan') {
+     stage('Completes Init and Working on Apply') {
         steps {
-            withCredentials([
-                usernamePassword(credentialsId: 'Anjan-AWS', passwordVariable: 'AWS_SECRET', usernameVariable: 'AWS_KEY'),
-            ]) {
-                sh '''
-                    terraform plan -auto-approve -var aws_access_key=${AWS_KEY} -var aws_secret_key=${AWS_SECRET}
-                '''
-            }
+            sh 'echo "Next step is Terraform Apply!!"'
         }
     }
+  }
 
     stage('Terraform Apply') {
         steps {
@@ -50,18 +52,6 @@ stages {
         }
     }
 
-   
-/*   stage('Terraform Plan') {
-        steps {
-            sh 'terraform plan -target=aws_lambda_function.demo_lambda -out demo_lambda.tfplan'
-        }
-    }
-        stage('Terraform Apply') {
-        steps {
-            sh 'terraform apply demo_lambda.tfplan'
-        }
-    }
-*/
     stage('Deployment Done') {
         steps {
             sh 'echo "Success....!!"'
