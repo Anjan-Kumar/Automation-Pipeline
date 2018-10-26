@@ -26,6 +26,18 @@ stages {
         }
     }
 
+     stage('Terraform Plan') {
+        steps {
+            withCredentials([
+                usernamePassword(credentialsId: 'Anjan-AWS', passwordVariable: 'AWS_SECRET', usernameVariable: 'AWS_KEY'),
+            ]) {
+                sh '''
+                    terraform plan -auto-approve -var aws_access_key=${AWS_KEY} -var aws_secret_key=${AWS_SECRET}
+                '''
+            }
+        }
+    }
+
     stage('Terraform Apply') {
         steps {
             withCredentials([
